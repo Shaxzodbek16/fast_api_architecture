@@ -1,9 +1,13 @@
 from fastapi import FastAPI
+from app.core.settings import get_settings
+
+settings = get_settings()
+
 
 def create_app() -> FastAPI:
     app_ = FastAPI(
-        title="PDP's Hotel",
-        description="This is a project for learning FastApi",
-        version="0.1.0",
+        title=settings.PROJECT_NAME,
+        description=settings.PROJECT_DESCRIPTION,
+        version=settings.PROJECT_VERSION,
     )
     return app_
