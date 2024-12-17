@@ -1,5 +1,13 @@
 from functools import cache
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, AsyncEngine
+from typing import AsyncGenerator
+
+from fastapi.params import Depends
+from sqlalchemy.ext.asyncio import (
+    create_async_engine,
+    AsyncSession,
+    AsyncEngine,
+    async_sessionmaker,
+)
 from app.core.settings import get_settings
 
 settings = get_settings()
@@ -12,12 +20,17 @@ def get_async_engine():
     return create_async_engine(postgres_url, pool_size=3)
 
 
-def add(x, y):
-    while y != 0:
-        carry = x & y
-        x = x ^ y
-        y = carry << 1
-    return x
+@cache
+def get_general_session_maker(
+    general_engine: AsyncEngine = Depends(get_async_engine),
+) -> async_sessionmaker[AsyncSession]:
+    return async_sessionmaker(bind=general_engine, autoflush=False, autocommit=False)
 
 
-print(add(27, 5))
+async def get_general_session(
+    general_session_maker: async_sessionmaker[AsyncSession] = Depends(
+        get_general_session_maker
+    ),
+) -> AsyncGenerator[AsyncSession, None]:
+    async with general_session_maker() as session:
+        yield session
