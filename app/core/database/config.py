@@ -15,10 +15,9 @@ settings = get_settings()
 postgres_url = f"{settings.POSTGRES_USER}:{settings.POSTGRES_PASSWORD}@{settings.POSTGRES_HOST}:{settings.POSTGRES_PORT}/{settings.POSTGRES_DB}"
 
 
-
 @cache
 def get_async_engine():
-    return create_async_engine("postgresql+asyncpg://"+postgres_url, pool_size=3)
+    return create_async_engine("postgresql+asyncpg://" + postgres_url, pool_size=3)
 
 
 @cache

@@ -9,7 +9,9 @@ from sqlalchemy.orm import Mapped, mapped_column
 class Payments(Base):
     __tablename__ = "payments"
 
-    booking_id: Mapped[int] = mapped_column(ForeignKey("bookings.id", ondelete="SET NULL"))
+    booking_id: Mapped[int] = mapped_column(
+        ForeignKey("bookings.id", ondelete="SET NULL")
+    )
     payment_date: Mapped[datetime] = mapped_column(
         server_default=text("TIMEZONE('utc', now())")
     )
