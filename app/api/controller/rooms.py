@@ -8,4 +8,7 @@ class RoomsController:
         self.__rooms_repo = rooms_repo
 
     async def get_rooms(self):
-        pass
+        return await self.__rooms_repo.get_all_rooms()
+
+    async def get_room(self, room_id: int):
+        return await self.__rooms_repo.get_room(room_id)
