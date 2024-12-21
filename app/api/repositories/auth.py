@@ -20,4 +20,8 @@ class AuthRepository:
         ).bindparams(**data)
         await self.session.execute(stmt)
         await self.session.commit()
+        await self.session.refresh(data)
         return UserInSchema.model_validate(data)
+
+    async def check_exist_user(self, username):
+        pass
