@@ -1,6 +1,15 @@
 #!/bin/bash
 
-export PYTHONPATH=/Users/shaxzodbek/Developer/PDPEcosystem/PDPUniversity/2-kurs/1-semestr/Programming/fastapi/fast_4_models
+black .
 
+echo "Black formatting done"
+
+sleep 1
+
+pip freeze > requirements.txt
+
+echo "Requirements updated"
+
+sleep 1
 
 uvicorn app.server.app:create_app --reload
