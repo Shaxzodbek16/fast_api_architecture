@@ -12,6 +12,7 @@ class Payments(Base):
     booking_id: Mapped[int] = mapped_column(
         ForeignKey("bookings.id", ondelete="SET NULL")
     )
+
     payment_date: Mapped[datetime] = mapped_column(
         server_default=text("TIMEZONE('utc', now())")
     )
